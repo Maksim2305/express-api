@@ -1,9 +1,9 @@
 import express from 'express';
 import multer from 'multer';
+import { UserController } from '../controllers';
+import authentificateToken from '../middlewares/auth';
 
 const router = express.Router();
-
-import { UserController } from '../controllers';
 
 const storage = multer.diskStorage({
   destination: 'uploads',
@@ -14,10 +14,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Route User
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
-router.get('/users/:id', UserController.getUserById);
-router.put('/users/:id', UserController.updateUser);
-router.get('/current', UserController.current);
+router.get('/users/:id', authentificateToken, UserController.getUserById);
+router.put('/users/:id', authentificateToken, UserController.updateUser);
+router.get('/current', authentificateToken, UserController.current);
+
+//Routes Post
+
+// router.post('/post', au)
 
 export default router;
