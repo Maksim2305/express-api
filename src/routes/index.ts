@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { CommentController, PostController, UserController } from '../controllers';
+import { CommentController, LikeController, PostController, UserController, FollowController } from '../controllers';
 import authentificateToken from '../middlewares/auth';
 
 const router = express.Router();
@@ -30,5 +30,13 @@ router.delete('/posts/:id', authentificateToken, PostController.deletePost);
 //Routes Comment
 router.post('/comments', authentificateToken, CommentController.createComment);
 router.delete('/comments/:id', authentificateToken, CommentController.deleteComment);
+
+//Routes Like
+router.post('/likes', authentificateToken, LikeController.likePost);
+router.delete('/likes/:id', authentificateToken, LikeController.unLikePost);
+
+//Rotes Follow
+router.post('/follow', authentificateToken, FollowController.followUser);
+router.delete('/unfollow/:id', authentificateToken, FollowController.unfollowUser);
 
 export default router;
