@@ -12,13 +12,13 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const uploads = multer({ storage: storage });
 
 // Route User
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.get('/users/:id', authentificateToken, UserController.getUserById);
-router.put('/users/:id', authentificateToken, UserController.updateUser);
+router.put('/users/:id', authentificateToken, uploads.single('avatar'), UserController.updateUser);
 router.get('/current', authentificateToken, UserController.current);
 
 //Routes Post
